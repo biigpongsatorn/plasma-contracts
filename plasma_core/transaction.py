@@ -56,7 +56,9 @@ class Transaction(rlp.Serializable):
                  outputs=[DEFAULT_OUTPUT] * NUM_TXOS,
                  signatures=[NULL_SIGNATURE] * NUM_TXOS):
         padded_inputs = pad_list(inputs, self.DEFAULT_INPUT, self.NUM_TXOS)
+        assert 4 == len(padded_inputs)
         padded_outputs = pad_list(outputs, self.DEFAULT_OUTPUT, self.NUM_TXOS)
+        assert 4 == len(padded_outputs)
 
         self.inputs = [TransactionInput(*i) for i in padded_inputs]
         self.outputs = [TransactionOutput(*o) for o in padded_outputs]
@@ -73,7 +75,11 @@ class Transaction(rlp.Serializable):
 
     @property
     def encoded(self):
-        return rlp.encode(self, UnsignedTransaction)
+        from eth_utils import encode_hex
+        encoded = rlp.encode(self, UnsignedTransaction)
+        hextx = encode_hex(encoded)
+        print("deposit hex: {}".format(hextx))
+        return encoded
 
     @property
     def is_deposit(self):

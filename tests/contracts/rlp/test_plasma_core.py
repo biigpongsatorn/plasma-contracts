@@ -49,3 +49,17 @@ def test_get_tx_index(plasma_core_test):
 def test_get_blknum(plasma_core_test):
     output_id = 1000020003
     assert plasma_core_test.getBlknum(output_id) == 1
+
+def test_deposit_parsing(plasma_core_test):
+    hexed = "0xf86fd0c3808080c3808080c3808080c3808080f85cd69482a978b3f5962a5b0957d9ee9eef472ee55b42f164d694000000000000000000000000000000000000000080d694000000000000000000000000000000000000000080d694000000000000000000000000000000000000000080"
+    from eth_utils import decode_hex
+    raw = decode_hex(hexed)
+    o0 = plasma_core_test.getOutput(raw, 0)
+    o1 = plasma_core_test.getOutput(raw, 1)
+    o2 = plasma_core_test.getOutput(raw, 2)
+    o3 = plasma_core_test.getOutput(raw, 3)
+    print("output 0 is {}".format(o0))
+    print("output 1 is {}".format(o1))
+    print("output 2 is {}".format(o2))
+    print("output 3 is {}".format(o3))
+    assert False
